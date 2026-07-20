@@ -50,6 +50,52 @@
     </div>
   </div>
 
+  <!-- ── GPIO STATUS ── -->
+  <div class="card needs-device" id="card-gpio">
+    <div class="card-head">
+      <h2>GPIO Status</h2>
+      <div class="acts" style="gap:6px; align-items:center">
+        <span class="gpio-live-dot" id="gpio-live-dot"></span>
+        <span style="font-size:11px; color:var(--muted)" id="gpio-live-label">Waiting for report…</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="gpio-grid">
+        <div class="gpio-pin" id="gpio-ptt1">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">PTT1</span>
+          <span class="gpio-type">OUT</span>
+        </div>
+        <div class="gpio-pin" id="gpio-ptt2">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">PTT2</span>
+          <span class="gpio-type">OUT</span>
+        </div>
+        <div class="gpio-pin" id="gpio-btn1">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">Vol+</span>
+          <span class="gpio-type gpio-src" id="gpio-btn1-src">—</span>
+        </div>
+        <div class="gpio-pin" id="gpio-btn2">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">Vol−</span>
+          <span class="gpio-type gpio-src" id="gpio-btn2-src">—</span>
+        </div>
+        <div class="gpio-pin" id="gpio-btn3">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">PlayMute</span>
+          <span class="gpio-type gpio-src" id="gpio-btn3-src">—</span>
+        </div>
+        <div class="gpio-pin" id="gpio-btn4">
+          <div class="gpio-led off"></div>
+          <span class="gpio-label">RecMute</span>
+          <span class="gpio-type gpio-src" id="gpio-btn4-src">—</span>
+        </div>
+      </div>
+      <p class="gpio-note">PTT outputs reflect button-press state. CM108 button inputs update live from device HID reports — labels show configured source from IOMUX registers.</p>
+    </div>
+  </div>
+
   <!-- ── PTT SOURCES ── -->
   <div class="card needs-device" id="card-ptt">
     <div class="card-head">
