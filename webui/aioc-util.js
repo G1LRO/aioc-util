@@ -4,6 +4,12 @@
 const AIOC_VID = 0x1209;
 const AIOC_PID = 0x7388;
 
+// Known VID/PID pairs the AIOC may present as (device is always verified by magic register)
+const KNOWN_HID_FILTERS = [
+  { vendorId: 0x1209, productId: 0x7388 },  // default AIOC
+  { vendorId: 0x0d8c, productId: 0x000c },  // CM108 (common AllStarLink / ASL3 config)
+];
+
 const Reg = {
   MAGIC:        0x00,
   USBID:        0x08,
@@ -288,9 +294,16 @@ async function connect() {
     return;
   }
   try {
-    const devices = await navigator.hid.requestDevice({
-      filters: [{ vendorId: AIOC_VID, productId: AIOC_PID }]
-    });
+    // Build filter list: all known VID/PID pairs + any custom pair entered by the user
+    const filters = [...KNOWN_HID_FILTERS];
+    const customVid = parseHex(document.getElementById('custom-vid')?.value ?? '');
+    const customPid = parseHex(document.getElementById('custom-pid')?.value ?? '');
+    if (customVid && customPid) {
+      filters.push({ vendorId: customVid, productId: customPid });
+      log(`Adding custom filter: ${customVid.toString(16).padStart(4,'0')}:${customPid.toString(16).padStart(4,'0')}`);
+    }
+
+    const devices = await navigator.hid.requestDevice({ filters });
     if (!devices.length) { log('No device selected.'); return; }
 
     // Try each returned collection, verify magic
